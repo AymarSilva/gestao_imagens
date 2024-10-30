@@ -8,8 +8,9 @@ const fileName = url.fileURLToPath(import.meta.url);
 const dirName = path.dirname(fileName);
 
 export async function createImagem(descricao, nomeImagem, imagem) {
+    console.log(db);
     const conexao = mysql.createPool(db);
-    const sql = `INSERT INTO imagens (descricao, caminho) VALUES (?,?)`;
+    const sql = `INSERT INTO ${db.dabatase}.imagens (descricao, caminho) VALUES (?,?)`;
 
     const params = [descricao, nomeImagem];
 

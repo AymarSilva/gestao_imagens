@@ -1,7 +1,7 @@
 import express from "express";
 import fileUpload from "express-fileupload";
 import mostrarImagem from "./controllers/ImagemController.js";
-import criarImagem from "./controllers/ImagemController.js";
+import { criarImagem } from "./controllers/ImagemController.js";
 const server = express();
 const porta = 5000;
 

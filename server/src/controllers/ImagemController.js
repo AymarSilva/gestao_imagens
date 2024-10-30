@@ -12,19 +12,19 @@ export async function criarImagem(req,res) {
   console.log("ImagemController :: Criando Imagem");
 
   const { descricao } = req.body;
-  const { image } = req.files;
+  const { caminho } = req.files;
   
-  if (!descricao || !image) {
+  if (!descricao || !caminho) {
     res.status(400).json({message: "Imagem e descrição são obrigatórios"});
   }else{
-    const extensao = path.extname(image.name).toLocaleLowerCase();
+    const extensao = path.extname(caminho.name).toLocaleLowerCase();
     const extPermitidas = ['.jpg','.jpeg','.png'];
 
     if (extPermitidas.includes(extensao)) {
       const nomeImagem = `${Date.now()}${extensao}`;
 
       try {
-        const [status,resposta] = await createImagem(descricao, nomeImagem, image);
+        const [status,resposta] = await createImagem(descricao, nomeImagem, caminho);
         res.status(status).json(resposta);
       } catch (error) {
         console.log(error);
