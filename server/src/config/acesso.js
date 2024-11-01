@@ -2,7 +2,7 @@ const db = {
     host: "localhost",
     user: "root",
     password: "",
-    dabatase: "eduardo"
+    database: "painel"
 };
 
 export default db;
