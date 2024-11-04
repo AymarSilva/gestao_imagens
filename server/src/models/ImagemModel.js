@@ -1,7 +1,7 @@
 import mysql from "mysql2/promise";
 import path from "path";
 import url from "url";
-// import { } from "fs/promises";
+import { unlink } from "fs/promises";
 import db from "../config/acesso.js";
 
 const fileName = url.fileURLToPath(import.meta.url);
@@ -62,20 +62,22 @@ export async function showImagens() {
 export async function deleteImage(id) {
     console.log("ImagemModel :: EditImage");
     const sql = `DELETE FROM imagens WHERE idImagens = ?`;
+    const imagemDel = `SELECT * FROM imagens WHERE idImagens = ?`;
 
     try {
-        const [retorno] = await conexao.query(sql, [id]);
-
-        if (retorno.affectedRows < 1) {
-            return [404, `Imagem ${id} não encontrada`]
+        const [imagem] = await conexao.query(imagemDel,[id]);
+        if (imagem.length > 0) {
+            const nomeImg = imagem[0].caminho;
+            await conexao.query(sql,[id]);
+            await unlink(path.join(dirName,"..","..","public","img", nomeImg));
+            return [200, { message: "Imagem Deletada" }];
+        } else {
+          return [404, { message: "Imagem não encontrada" }];  
         };
-
-        return [200, `Imagem ${id} deletada`]
     } catch (error) {
         console.log(error);
         return [500, { erro: error }];
     };
-
 };
 
 export async function showOneImage(id) {
@@ -85,7 +87,7 @@ export async function showOneImage(id) {
     try {
         const [retorno] = await conexao.query(sql, [id]);
 
-        if (retorno.affectedRows < 1) {
+        if (retorno.length < 1) {
             return [404, `Imagem ${id} não encontrada`];
         };
 
@@ -94,5 +96,4 @@ export async function showOneImage(id) {
         console.log(error);
         return [500, error];
     };
-
 };

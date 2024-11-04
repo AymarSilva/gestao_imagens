@@ -1,5 +1,6 @@
 import express from "express";
 import fileUpload from "express-fileupload";
+import cors from "cors";
 
 import enviarImagem, { deletarImagem, mostrarUmaImagem } from "./controllers/ImagemController.js";
 import { mostrarImagens,criarImagem ,editarImagem  }
@@ -10,6 +11,7 @@ const porta = 5000;
 
 server.use(fileUpload());
 server.use(express.json());
+server.use(cors());
 
 server.get('/', function(req,res){
     res.send({ message: "api rodando em /" });

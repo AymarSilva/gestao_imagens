@@ -90,10 +90,6 @@ export async function deletarImagem(req, res) {
   try {
     const [statusCode, retorno] = await deleteImage(idImagens);
 
-    if (retorno.affect) {
-      
-    }
-
     res.status(statusCode).json(retorno);
   } catch (error) {
     console.log(error);
