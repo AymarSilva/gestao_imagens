@@ -5,6 +5,7 @@ import cors from "cors";
 import enviarImagem, { deletarImagem, mostrarUmaImagem } from "./controllers/ImagemController.js";
 import { mostrarImagens,criarImagem ,editarImagem  }
 from "./controllers/ImagemController.js";
+import { criarUsuario, lerUmUsuario, lerUsuario, logarUsuario } from "./controllers/UsuarioController.js";
 
 const server = express();
 const porta = 5000;
@@ -18,6 +19,12 @@ server.get('/', function(req,res){
 });
 
 server.get('/public/:nomeImg', enviarImagem);
+
+server.get("/usuario", lerUsuario);
+server.get("/usuario/:id", lerUmUsuario)
+server.post('/usuario', criarUsuario);
+
+server.post("/login", logarUsuario);
 
 server.get("/imagem/:idImagens", mostrarUmaImagem);
 server.post('/imagem', criarImagem);
