@@ -53,7 +53,7 @@ export async function authentication(login, senha) {
     console.log("autenticacao ",login,senha)
     console.log("UsuarioModel :: autenticacao");
     const sql = `SELECT id FROM usuarios WHERE login = ? AND senha = ?`;
-    const [params] = [login, senha];
+    const params = [login, senha];
 
     try {
         const [retorno] = await conexao.query(sql, params);
